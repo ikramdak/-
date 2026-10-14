@@ -1,0 +1,430 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>从“羊”到“牧羊犬”：A股生肖叙事的形成、传播与价格映射</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: light-dark(#f6f3ed, #111719);
+      --paper: light-dark(#fffdf8, #182023);
+      --ink: light-dark(#202724, #eef3ef);
+      --muted: light-dark(#65706b, #aab6b0);
+      --line: light-dark(#d9d8d0, #354146);
+      --green: light-dark(#176b52, #63caa8);
+      --green-soft: light-dark(#e5f2ec, #19372f);
+      --amber: light-dark(#a75f08, #f3b85f);
+      --amber-soft: light-dark(#fff0d8, #3a2b19);
+      --red: light-dark(#a33a32, #ef8a82);
+      --red-soft: light-dark(#f9e8e5, #3a2324);
+      --blue: light-dark(#315f9d, #82aee9);
+      --blue-soft: light-dark(#e8eff9, #1d2c42);
+      --purple: light-dark(#6b4e9b, #b39be1);
+      --purple-soft: light-dark(#efe9f7, #2e2740);
+      --shadow: 0 14px 38px light-dark(rgba(46, 44, 37, .10), rgba(0, 0, 0, .28));
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at 10% 0%, color-mix(in srgb, var(--amber) 9%, transparent), transparent 30rem),
+        radial-gradient(circle at 95% 20%, color-mix(in srgb, var(--green) 9%, transparent), transparent 34rem),
+        var(--bg);
+      color: var(--ink);
+      font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", "Noto Sans CJK SC", sans-serif;
+      line-height: 1.68;
+    }
+
+    a { color: var(--blue); text-decoration-thickness: 1px; text-underline-offset: 3px; }
+    button { font: inherit; }
+    .page { width: min(1180px, calc(100% - 32px)); margin: 0 auto; padding: 34px 0 72px; }
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      padding: clamp(28px, 5vw, 62px);
+    }
+    .hero::after {
+      content: "羊";
+      position: absolute;
+      right: clamp(12px, 4vw, 48px);
+      top: -52px;
+      color: color-mix(in srgb, var(--green) 10%, transparent);
+      font-family: ui-serif, "Songti SC", serif;
+      font-size: clamp(180px, 28vw, 360px);
+      font-weight: 700;
+      line-height: 1;
+      pointer-events: none;
+    }
+    .eyebrow { color: var(--green); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+    h1, h2, h3 { line-height: 1.25; margin: 0; }
+    h1 { position: relative; max-width: 850px; margin-top: 14px; font-size: clamp(34px, 5.7vw, 68px); letter-spacing: -.04em; }
+    h2 { font-size: clamp(26px, 3.4vw, 40px); letter-spacing: -.025em; }
+    h3 { font-size: 20px; }
+    .deck { position: relative; max-width: 770px; margin: 22px 0 0; color: var(--muted); font-size: clamp(17px, 2vw, 21px); }
+    .hero-meta { position: relative; display: flex; flex-wrap: wrap; gap: 10px; margin-top: 26px; }
+    .chip { padding: 7px 12px; border-radius: 999px; background: var(--green-soft); color: var(--green); font-size: 14px; font-weight: 700; }
+    .chip.neutral { background: color-mix(in srgb, var(--muted) 12%, transparent); color: var(--ink); }
+
+    nav { display: flex; gap: 8px; flex-wrap: wrap; margin: 20px 0 0; }
+    nav a { padding: 8px 11px; border: 1px solid var(--line); border-radius: 10px; background: var(--paper); color: var(--ink); text-decoration: none; font-size: 14px; }
+    nav a:hover, nav a:focus-visible { border-color: var(--green); color: var(--green); }
+
+    section { margin-top: 64px; scroll-margin-top: 18px; }
+    .section-head { display: grid; grid-template-columns: minmax(0, 1fr) minmax(230px, 420px); gap: 28px; align-items: end; margin-bottom: 24px; }
+    .section-kicker { color: var(--amber); font-size: 13px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; }
+    .section-head p { margin: 0; color: var(--muted); }
+
+    .callout {
+      margin: 22px 0;
+      padding: 18px 20px;
+      border-left: 5px solid var(--blue);
+      border-radius: 0 16px 16px 0;
+      background: var(--blue-soft);
+    }
+    .callout strong { display: block; margin-bottom: 4px; }
+    .callout.warning { border-color: var(--amber); background: var(--amber-soft); }
+    .callout.danger { border-color: var(--red); background: var(--red-soft); }
+    .callout.success { border-color: var(--green); background: var(--green-soft); }
+    .callout.purple { border-color: var(--purple); background: var(--purple-soft); }
+    .callout p { margin: 5px 0 0; }
+
+    .three-lessons { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 24px; }
+    .lesson { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 22px; }
+    .lesson .num { color: var(--amber); font: 700 34px/1 ui-serif, Georgia, serif; }
+    .lesson h3 { margin-top: 13px; }
+    .lesson p { margin: 8px 0 0; color: var(--muted); }
+
+    .timeline { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-top: 22px; }
+    .timeline::before { content: ""; position: absolute; left: 8%; right: 8%; top: 30px; height: 2px; background: var(--line); }
+    .stage { position: relative; min-height: 186px; padding-top: 64px; }
+    .stage::before { content: attr(data-step); position: absolute; z-index: 1; top: 7px; left: 50%; transform: translateX(-50%); display: grid; place-items: center; width: 46px; height: 46px; border-radius: 50%; background: var(--paper); border: 3px solid var(--green); color: var(--green); font-weight: 800; }
+    .stage-card { height: 100%; padding: 17px; background: var(--paper); border: 1px solid var(--line); border-radius: 16px; }
+    .stage-card h3 { font-size: 17px; }
+    .stage-card p { margin: 8px 0 0; color: var(--muted); font-size: 14px; }
+    .stage-card .examples { margin-top: 11px; color: var(--green); font-weight: 700; font-size: 14px; }
+
+    .ecosystem { display: grid; grid-template-columns: 1fr 1.15fr 1fr; grid-template-areas: "direct center relation" "sound center ip"; gap: 16px; align-items: stretch; }
+    .eco-card { background: var(--paper); border: 1px solid var(--line); border-radius: 18px; padding: 20px; }
+    .eco-card h3 { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .eco-card p { color: var(--muted); margin: 8px 0 0; }
+    .eco-card.direct { grid-area: direct; border-top: 5px solid var(--green); }
+    .eco-card.sound { grid-area: sound; border-top: 5px solid var(--amber); }
+    .eco-card.ip { grid-area: ip; border-top: 5px solid var(--blue); }
+    .eco-card.relation { grid-area: relation; border-top: 5px solid var(--red); }
+    .eco-center { grid-area: center; display: grid; place-items: center; min-height: 360px; border-radius: 50%; background: radial-gradient(circle, var(--green-soft) 0 49%, transparent 50%); text-align: center; padding: 54px; }
+    .eco-center .animal { font-size: 78px; line-height: 1; }
+    .eco-center h3 { margin-top: 10px; font-size: 25px; }
+    .eco-center p { max-width: 250px; margin: 8px auto 0; color: var(--muted); }
+    .label { display: inline-block; padding: 3px 8px; border-radius: 999px; background: color-mix(in srgb, var(--muted) 12%, transparent); color: var(--ink); font-size: 12px; font-weight: 700; }
+    .label.fact { background: var(--green-soft); color: var(--green); }
+    .label.interp { background: var(--amber-soft); color: var(--amber); }
+    .label.unknown { background: var(--purple-soft); color: var(--purple); }
+    .ticker-list { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 12px; }
+    .ticker { padding: 5px 8px; border-radius: 8px; background: color-mix(in srgb, var(--line) 48%, transparent); font-size: 13px; }
+
+    .feedback-wrap { display: grid; grid-template-columns: 1.25fr .75fr; gap: 24px; align-items: center; }
+    .feedback-svg { width: 100%; height: auto; overflow: visible; }
+    .feedback-svg text { fill: var(--ink); font-family: inherit; }
+    .feedback-svg .muted { fill: var(--muted); }
+    .feedback-svg .node { fill: var(--paper); stroke: var(--line); stroke-width: 2; }
+    .feedback-svg .arrow { fill: none; stroke: var(--green); stroke-width: 3; marker-end: url(#arrowhead); }
+    .slogans { display: grid; gap: 10px; }
+    .slogan { padding: 13px 15px; border-radius: 12px; background: var(--paper); border: 1px solid var(--line); font-weight: 700; }
+    .slogan small { display: block; margin-top: 4px; color: var(--muted); font-weight: 400; }
+
+    .market-grid { display: grid; grid-template-columns: 1.2fr .8fr; gap: 24px; align-items: start; }
+    .bars { padding: 22px; border-radius: 18px; background: var(--paper); border: 1px solid var(--line); }
+    .bar-row { display: grid; grid-template-columns: 98px 1fr 68px; gap: 12px; align-items: center; margin: 14px 0; }
+    .bar-name { font-weight: 700; }
+    .track { position: relative; height: 24px; background: color-mix(in srgb, var(--line) 32%, transparent); border-radius: 999px; overflow: hidden; }
+    .track::after { content: ""; position: absolute; top: 0; bottom: 0; left: 50%; width: 1px; background: var(--muted); opacity: .6; }
+    .bar { position: absolute; top: 3px; bottom: 3px; border-radius: 999px; min-width: 2px; }
+    .bar.pos { left: 50%; width: calc(var(--v) * 5%); background: var(--green); }
+    .bar.neg { right: 50%; width: calc(var(--v) * 5%); background: var(--red); }
+    .bar-value { text-align: right; font-variant-numeric: tabular-nums; font-weight: 800; }
+    .bar-value.pos { color: var(--green); }
+    .bar-value.neg { color: var(--red); }
+    .chart-note { margin: 15px 0 0; color: var(--muted); font-size: 13px; }
+
+    .role-table { width: 100%; border-collapse: collapse; background: var(--paper); border: 1px solid var(--line); border-radius: 18px; overflow: hidden; }
+    .role-table th, .role-table td { padding: 12px 13px; text-align: left; border-bottom: 1px solid var(--line); vertical-align: top; }
+    .role-table th { color: var(--muted); font-size: 13px; }
+    .role-table tr:last-child td { border-bottom: 0; }
+
+    .five-state { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; }
+    .state { min-height: 210px; padding: 18px; border-radius: 16px; background: var(--paper); border: 1px solid var(--line); }
+    .state .state-name { font-weight: 800; color: var(--blue); }
+    .state:nth-child(2) .state-name { color: var(--amber); }
+    .state:nth-child(3) .state-name { color: var(--purple); }
+    .state:nth-child(4) .state-name { color: var(--red); }
+    .state:nth-child(5) .state-name { color: var(--muted); }
+    .state p { margin: 10px 0 0; color: var(--muted); font-size: 14px; }
+
+    .questions { counter-reset: q; display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .question { counter-increment: q; position: relative; padding: 19px 19px 19px 58px; border-radius: 16px; background: var(--paper); border: 1px solid var(--line); }
+    .question::before { content: counter(q); position: absolute; left: 17px; top: 17px; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--ink); color: var(--bg); font-weight: 800; }
+
+    .source-list { padding-left: 22px; }
+    .source-list li { margin: 9px 0; }
+    footer { margin-top: 52px; padding-top: 18px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+
+    @media (max-width: 900px) {
+      .section-head, .feedback-wrap, .market-grid { grid-template-columns: 1fr; }
+      .three-lessons { grid-template-columns: 1fr; }
+      .timeline { grid-template-columns: 1fr; }
+      .timeline::before { left: 22px; right: auto; top: 20px; bottom: 20px; width: 2px; height: auto; }
+      .stage { min-height: 0; padding: 0 0 0 62px; }
+      .stage::before { left: 22px; top: 14px; transform: translateX(-50%); }
+      .ecosystem { grid-template-columns: 1fr 1fr; grid-template-areas: "center center" "direct sound" "ip relation"; }
+      .eco-center { min-height: 250px; border-radius: 24px; background: var(--green-soft); }
+      .five-state { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 620px) {
+      .page { width: min(100% - 20px, 1180px); padding-top: 10px; }
+      .hero { border-radius: 18px; }
+      .ecosystem, .five-state, .questions { grid-template-columns: 1fr; grid-template-areas: "center" "direct" "sound" "ip" "relation"; }
+      .bar-row { grid-template-columns: 80px 1fr 58px; gap: 8px; }
+      .role-table { display: block; overflow-x: auto; }
+    }
+
+    @media print {
+      :root { color-scheme: light; }
+      body { background: #fff; }
+      .page { width: 100%; padding: 0; }
+      .hero, .lesson, .eco-card, .bars, .state, .question { box-shadow: none; break-inside: avoid; }
+      nav { display: none; }
+      section { break-inside: avoid; margin-top: 34px; }
+      a { color: inherit; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="hero">
+      <div class="eyebrow">Lec03 · 市场叙事案例</div>
+      <h1>从“羊”到“牧羊犬”</h1>
+      <p class="deck">A股生肖叙事如何从历法事实出发，经过名称、谐音、IP与角色关系不断扩张，并最终映射到二级市场价格。</p>
+      <div class="hero-meta">
+        <span class="chip">决策冻结时点：2026-10-14</span>
+        <span class="chip neutral">课程：金融专硕《投资学》</span>
+        <span class="chip neutral">五状态：Fact / Interpretation / Forecast / Decision / Unknown</span>
+      </div>
+    </header>
+
+    <nav aria-label="本页目录">
+      <a href="#anchor">叙事起点</a>
+      <a href="#map">角色地图</a>
+      <a href="#spread">传播机制</a>
+      <a href="#market">价格映射</a>
+      <a href="#audit">证据审计</a>
+      <a href="#discussion">课堂讨论</a>
+    </nav>
+
+    <aside class="callout warning">
+      <strong>先纠正年份</strong>
+      <p><b>2026年是丙午马年，2027年才是丁未羊年。</b>当前市场交易的是“2026年提前预热2027羊年”，不是“2026羊年”。</p>
+    </aside>
+
+    <div class="three-lessons" aria-label="本案例的三个核心学习点">
+      <article class="lesson"><div class="num">01</div><h3>事实只是起点</h3><p>历法是事实；“哪只股票受益”是解释，不能混写。</p></article>
+      <article class="lesson"><div class="num">02</div><h3>叙事会变异</h3><p>羊 → 阳、洋 → 喜羊羊 → 狼、牧羊人、牧羊犬，关联逐层放宽。</p></article>
+      <article class="lesson"><div class="num">03</div><h3>价格会反哺故事</h3><p>上涨被当作“资金认可”的证据，进一步放大讨论与交易。</p></article>
+    </div>
+
+    <section id="anchor">
+      <div class="section-head">
+        <div><div class="section-kicker">Narrative ladder</div><h2>一条叙事如何逐层扩张</h2></div>
+        <p>从确定性最高的历法事实，逐步走向需要更多解释、也更难核验的关系型标的。</p>
+      </div>
+      <div class="timeline" aria-label="生肖羊叙事五阶段扩张">
+        <article class="stage" data-step="1"><div class="stage-card"><h3>时间锚</h3><p>2027年丁未羊年，为叙事提供公开、确定的时间节点。</p><div class="examples">历法事实</div></div></article>
+        <article class="stage" data-step="2"><div class="stage-card"><h3>直接同字</h3><p>先寻找名称中直接含“羊”的稀缺标的。</p><div class="examples">水羊股份 · 三羊马</div></div></article>
+        <article class="stage" data-step="3"><div class="stage-card"><h3>谐音扩散</h3><p>核心标的拥挤后，“阳”“洋”被替换成“羊”。</p><div class="examples">九阳股份 · 澳洋健康</div></div></article>
+        <article class="stage" data-step="4"><div class="stage-card"><h3>文化IP</h3><p>喜羊羊与灰太狼为抽象生肖提供具体角色与商业化接口。</p><div class="examples">奥飞娱乐</div></div></article>
+        <article class="stage" data-step="5"><div class="stage-card"><h3>关系角色</h3><p>叙事扩展至羊的捕食者、饲养者与保护者。</p><div class="examples">七匹狼 · 九牧王</div></div></article>
+      </div>
+
+      <aside class="callout success">
+        <strong>叙事的“纯度”与传播能力并不相同</strong>
+        <p>直接同字的关联更容易识别；关系角色的关联更有戏剧性。前者便于筛选，后者便于讲故事。</p>
+      </aside>
+    </section>
+
+    <section id="map">
+      <div class="section-head">
+        <div><div class="section-kicker">Role map</div><h2>以“羊”为中心的角色地图</h2></div>
+        <p>这些公司并非同一行业。它们被放进同一“板块”，依赖的是符号与角色关系，而不是产业链关系。</p>
+      </div>
+      <div class="ecosystem">
+        <article class="eco-card direct">
+          <h3>直接同字 <span class="label fact">最短映射</span></h3>
+          <p>名称直接出现“羊”，几乎不需要中间解释。</p>
+          <div class="ticker-list"><span class="ticker">水羊股份</span><span class="ticker">三羊马</span></div>
+        </article>
+        <article class="eco-card sound">
+          <h3>谐音替代 <span class="label interp">Interpretation</span></h3>
+          <p>通过“阳=羊”“洋=羊”扩大候选范围。</p>
+          <div class="ticker-list"><span class="ticker">九阳股份</span><span class="ticker">澳洋健康</span><span class="ticker">天洋新材</span></div>
+        </article>
+        <div class="eco-center">
+          <div><div class="animal" aria-hidden="true">🐑</div><h3>2027 丁未羊年</h3><p>时间锚 + 稀缺名称 + 民俗口号，构成叙事核心。</p></div>
+        </div>
+        <article class="eco-card ip">
+          <h3>文化IP <span class="label fact">有业务接口</span></h3>
+          <p>奥飞娱乐持续经营“喜羊羊与灰太狼”IP，但生肖年份是否转化为利润仍待验证。</p>
+          <div class="ticker-list"><span class="ticker">奥飞娱乐</span></div>
+        </article>
+        <article class="eco-card relation">
+          <h3>关系角色 <span class="label unknown">待验证传播</span></h3>
+          <p>“狼吃羊”“苏武牧羊”“羊群需要牧羊犬”把外围角色纳入题材。</p>
+          <div class="ticker-list"><span class="ticker">七匹狼</span><span class="ticker">九牧王</span></div>
+        </article>
+      </div>
+
+      <aside class="callout danger">
+        <strong>九牧王 ≠ 牧羊犬业务</strong>
+        <p>九牧王主营男裤及男士商务休闲服饰。“牧羊”“牧羊犬”均为市场对公司名称的角色化加工，不是公司披露的经营概念。</p>
+      </aside>
+      <aside class="callout purple">
+        <strong>“牧羊犬”目前应标为 Unknown</strong>
+        <p>公开讨论中可核验到“苏武牧羊”“九王”等表达；“狼来了，需要牧羊犬保护羊群”是进一步的叙事变体。现有材料不足以证明它已成为主流市场表达。</p>
+      </aside>
+    </section>
+
+    <section id="spread">
+      <div class="section-head">
+        <div><div class="section-kicker">Feedback loop</div><h2>传播不是直线，而是反馈循环</h2></div>
+        <p>名称筛选、口号压缩、共同标注与价格上涨相互加强，最终制造出“板块感”。</p>
+      </div>
+      <div class="feedback-wrap">
+        <svg class="feedback-svg" viewBox="0 0 720 430" role="img" aria-labelledby="loopTitle loopDesc">
+          <title id="loopTitle">羊年叙事传播反馈循环</title>
+          <desc id="loopDesc">时间节点触发名称筛选，形成口号，在社区共同标注，带来资金关注，价格波动又反过来强化故事。</desc>
+          <defs><marker id="arrowhead" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="var(--green)"></path></marker></defs>
+          <path class="arrow" d="M203 89 C290 28 432 28 516 89"></path>
+          <path class="arrow" d="M570 132 C654 166 654 268 570 302"></path>
+          <path class="arrow" d="M516 344 C430 405 290 405 203 344"></path>
+          <path class="arrow" d="M148 302 C65 268 65 166 148 132"></path>
+          <rect class="node" x="75" y="64" rx="18" width="180" height="92"></rect>
+          <text x="165" y="100" text-anchor="middle" font-size="20" font-weight="700">① 稀缺符号</text>
+          <text class="muted" x="165" y="128" text-anchor="middle" font-size="14">水羊、三羊</text>
+          <rect class="node" x="465" y="64" rx="18" width="180" height="92"></rect>
+          <text x="555" y="100" text-anchor="middle" font-size="20" font-weight="700">② 口号压缩</text>
+          <text class="muted" x="555" y="128" text-anchor="middle" font-size="14">三羊开泰、狼吃羊</text>
+          <rect class="node" x="465" y="278" rx="18" width="180" height="92"></rect>
+          <text x="555" y="314" text-anchor="middle" font-size="20" font-weight="700">③ 共同标注</text>
+          <text class="muted" x="555" y="342" text-anchor="middle" font-size="14">帖子同时链接多只股票</text>
+          <rect class="node" x="75" y="278" rx="18" width="180" height="92"></rect>
+          <text x="165" y="314" text-anchor="middle" font-size="20" font-weight="700">④ 价格反馈</text>
+          <text class="muted" x="165" y="342" text-anchor="middle" font-size="14">上涨被解释为资金认可</text>
+          <circle cx="360" cy="217" r="74" fill="var(--amber-soft)" stroke="var(--amber)" stroke-width="2"></circle>
+          <text x="360" y="209" text-anchor="middle" font-size="22" font-weight="700">注意力—价格</text>
+          <text class="muted" x="360" y="238" text-anchor="middle" font-size="14">自我强化</text>
+        </svg>
+        <div class="slogans" aria-label="典型传播口号">
+          <div class="slogan">“水羊年，就看水羊股份”<small>历法材料被压缩为单一标的。</small></div>
+          <div class="slogan">“三羊开泰，马到成功”<small>三羊马同时连接马年与羊年。</small></div>
+          <div class="slogan">“阳就是羊，洋也是羊”<small>通过谐音扩大候选池。</small></div>
+          <div class="slogan">“羊肥了，狼就来了”<small>价格轮动被改写成捕食故事。</small></div>
+          <div class="slogan">“狼来了，需要牧羊犬”<small>关系角色继续向九牧王扩散。</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="market">
+      <div class="section-head">
+        <div><div class="section-kicker">Secondary market</div><h2>2026年10月14日：价格并未同步</h2></div>
+        <p>当日直接“羊”标的回落，狼与牧者上涨，更像叙事内部的轮动，而不是整个板块共同上涨。</p>
+      </div>
+      <div class="market-grid">
+        <div class="bars" role="img" aria-label="六只羊年叙事相关股票2026年10月14日涨跌幅对比">
+          <div class="bar-row"><div class="bar-name">七匹狼</div><div class="track"><div class="bar pos" style="--v:9.98"></div></div><div class="bar-value pos">+9.98%</div></div>
+          <div class="bar-row"><div class="bar-name">九牧王</div><div class="track"><div class="bar pos" style="--v:4.70"></div></div><div class="bar-value pos">+4.70%</div></div>
+          <div class="bar-row"><div class="bar-name">奥飞娱乐</div><div class="track"><div class="bar pos" style="--v:2.95"></div></div><div class="bar-value pos">+2.95%</div></div>
+          <div class="bar-row"><div class="bar-name">九阳股份</div><div class="track"><div class="bar pos" style="--v:0.11"></div></div><div class="bar-value pos">+0.11%</div></div>
+          <div class="bar-row"><div class="bar-name">水羊股份</div><div class="track"><div class="bar neg" style="--v:2.28"></div></div><div class="bar-value neg">−2.28%</div></div>
+          <div class="bar-row"><div class="bar-name">三羊马</div><div class="track"><div class="bar neg" style="--v:5.99"></div></div><div class="bar-value neg">−5.99%</div></div>
+          <p class="chart-note">横轴中心为0；左右最大显示约±10%。数据冻结于2026-10-14 15:08（北京时间）。</p>
+        </div>
+        <table class="role-table">
+          <thead><tr><th>标的</th><th>市场角色</th><th>证据边界</th></tr></thead>
+          <tbody>
+            <tr><td>水羊股份</td><td>“正宗羊”</td><td>名称事实；受益逻辑是解释</td></tr>
+            <tr><td>三羊马</td><td>马→羊过渡</td><td>名称事实；跨年龙头是预测</td></tr>
+            <tr><td>奥飞娱乐</td><td>喜羊羊IP</td><td>IP经营是事实；利润催化待验证</td></tr>
+            <tr><td>九阳股份</td><td>“阳=羊”</td><td>纯谐音映射</td></tr>
+            <tr><td>七匹狼</td><td>捕食者</td><td>“狼吃羊”是市场故事</td></tr>
+            <tr><td>九牧王</td><td>牧者/牧羊犬</td><td>名称加工；主营业务不相关</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <aside class="callout warning">
+        <strong>同步上涨不是叙事成立的必要条件，单日上涨也不是因果证据</strong>
+        <p>10月14日的分化可以支持“资金轮动”这一解释，但不能证明买方资金确实按照“狼—羊—牧羊犬”故事交易。</p>
+      </aside>
+    </section>
+
+    <section id="audit">
+      <div class="section-head">
+        <div><div class="section-kicker">Evidence audit</div><h2>用五状态拆开一句“好故事”</h2></div>
+        <p>课堂判断的关键不是复述故事，而是识别每句话究竟处于哪一种证据状态。</p>
+      </div>
+      <div class="five-state">
+        <article class="state"><div class="state-name">Fact</div><p>2027年是丁未羊年；奥飞娱乐经营喜羊羊与灰太狼IP；10月14日七匹狼涨停、九牧王上涨4.70%。</p></article>
+        <article class="state"><div class="state-name">Interpretation</div><p>七匹狼上涨代表资金从“羊”切向“狼”；九牧王代表保护羊群的牧羊犬。</p></article>
+        <article class="state"><div class="state-name">Forecast</div><p>羊年行情可能延续至春节前；外围角色可能接力补涨。</p></article>
+        <article class="state"><div class="state-name">Decision</div><p>是否参与、仓位多大、何时退出，需要投资者自行承担判断与风险。</p></article>
+        <article class="state"><div class="state-name">Unknown</div><p>当日资金的真实买入动机；“牧羊犬”是否已成为主流表达；题材能否持续形成板块效应。</p></article>
+      </div>
+
+      <aside class="callout danger">
+        <strong>不可直接推出</strong>
+        <p>“故事传播得快”不能推出“公司价值提高”；“股价上涨”不能推出“叙事是真实原因”；“名称稀缺”也不能推出“未来仍会获得资金认可”。</p>
+      </aside>
+    </section>
+
+    <section id="discussion">
+      <div class="section-head">
+        <div><div class="section-kicker">Class discussion</div><h2>课堂讨论问题</h2></div>
+        <p>要求学生明确区分事实、解释与待核验问题，并指出每个判断的失效条件。</p>
+      </div>
+      <div class="questions">
+        <div class="question">为什么名称完全匹配的标的通常先获得市场注意？</div>
+        <div class="question">“阳、洋、狼、牧羊犬”的加入，说明叙事发生了什么变化？</div>
+        <div class="question">价格上涨是在验证故事，还是故事在事后解释价格？</div>
+        <div class="question">如何验证九牧王上涨是否真的来自“牧羊犬”叙事？</div>
+        <div class="question">奥飞娱乐的IP关联为何比九阳股份的谐音关联更接近基本面？</div>
+        <div class="question">哪些观察结果会证明“羊年板块已经形成”这一判断是错的？</div>
+      </div>
+    </section>
+
+    <section id="sources">
+      <div class="section-head">
+        <div><div class="section-kicker">Sources</div><h2>来源与使用边界</h2></div>
+        <p>社区内容用于识别市场叙事，不作为公司经营事实；公司事实优先回到正式披露。</p>
+      </div>
+      <ol class="source-list">
+        <li><a href="https://www.hko.gov.hk/tc/gts/astron2026/files/HKO_almanac_2026.pdf">香港天文台《2026年年历》</a>：核对2026丙午马年。</li>
+        <li><a href="https://xueqiu.com/6575365768/377383607">雪球：羊年生肖玄学投机</a>：识别水羊、三羊、七狼、九王的早期并列传播。</li>
+        <li><a href="https://xueqiu.com/6682111872/366167111">雪球：九牧王等衍生叙事</a>：识别“苏武牧羊”等关系型变体。</li>
+        <li><a href="https://static.cninfo.com.cn/finalpage/2026-04-28/1225210934.PDF">奥飞娱乐2025年年度报告</a>：核验喜羊羊与灰太狼IP经营事实。</li>
+        <li><a href="https://www.sse.com.cn/assortment/stock/list/info/announcement/index.shtml?productId=601566">上交所：九牧王公司公告</a>：核验公司主营业务及风险提示。</li>
+        <li><a href="https://vip.stock.finance.sina.com.cn/corp/view/vCB_AllBulletinDetail.php?id=12580670&stockid=601566">九牧王2026年9月异常波动公告</a>：核验交易异动与业绩风险。</li>
+        <li>行情数据：腾讯行情接口，冻结时间为2026-10-14 15:08（北京时间）。行情仅用于描述当日表现，不构成因果证明。</li>
+      </ol>
+    </section>
+
+    <footer>
+      本材料用于金融专硕《投资学》课堂讨论。社区叙事不等于公司事实，价格共振不等于因果关系，本文不构成任何投资建议。
+    </footer>
+  </main>
+</body>
+</html>
